@@ -1,5 +1,7 @@
 package com.example.hw02_rgb;
 
+import android.graphics.Color;
+
 public class ColorInfo
 {
     //red green blue
@@ -58,5 +60,10 @@ public class ColorInfo
     public String getHex()
     {
         return String.format("#%02X%02X%02X", red, green, blue);
+    }
+
+    public int getColor()
+    {
+        return Color.rgb(red,green,blue); 
     }
 }
