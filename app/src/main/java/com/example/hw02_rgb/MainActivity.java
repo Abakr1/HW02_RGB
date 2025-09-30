@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -52,7 +53,16 @@ public class MainActivity extends AppCompatActivity
         //initialze list and adapter
         listOfColors = new ArrayList<>();
         adapter = new ColorListAdaptor(this,listOfColors);
-        //lv_j_listOfColors.setAdapter(adapter);
+        lv_j_listOfColors.setAdapter(adapter);
+
+        lv_j_listOfColors.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+            {
+                loadColor(position);
+            }
+        });
 
 
 
@@ -61,7 +71,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser)
             {
-
+                updateColor();
             }
 
             @Override
@@ -81,12 +91,20 @@ public class MainActivity extends AppCompatActivity
         sb_j_green.setOnSeekBarChangeListener(listener);
         sb_j_blue.setOnSeekBarChangeListener(listener);
 
-        btn_j_saveColor.setOnClickListener(v -> saveColor());
+        btn_j_saveColor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                saveColor();
+            }
+        });
 
         //initialze color
         updateColor();
 
     }
+
+
 
     private void updateColor()
     {
@@ -120,10 +138,11 @@ public class MainActivity extends AppCompatActivity
         int green = sb_j_green.getProgress();
         int blue  = sb_j_blue.getProgress();
 
-        //ColorInfo new Color = new ColorInfo(red, green, blue);
-        //listOfColors.add(newColor);
-        //adapter.notifyDataSetChanged();
+        ColorInfo newColor = new ColorInfo(red, green, blue);
+        listOfColors.add(newColor);
+        adapter.notifyDataSetChanged();
 
+        //reset ui
         resetSeekBars();
     }
 
@@ -161,9 +180,12 @@ public class MainActivity extends AppCompatActivity
         sb_j_red.setProgress(color.getRed());
         sb_j_green.setProgress(color.getGreen());
         sb_j_blue.setProgress(color.getBlue());
+        //call update color to update
         updateColor();
     }
 
-    private void setOnClickListener(View.OnClickListener onClickListener) {
+    private void setOnClickListener(View.OnClickListener onClickListener)
+    {
+
     }
 }
