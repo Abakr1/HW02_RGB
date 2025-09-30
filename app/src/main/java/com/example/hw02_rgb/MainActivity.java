@@ -3,6 +3,7 @@ package com.example.hw02_rgb;
 import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -119,6 +120,8 @@ public class MainActivity extends AppCompatActivity
         root.setBackgroundColor(Color.rgb(red,green,blue));
         updateTextColorContrast(red, green, blue);
 
+        Log.d("COLOR", "Setting background to: " + red + ", " + green + ", " + blue);
+
     }
 
     private void updateTextColorContrast(int red, int green, int blue)
@@ -158,9 +161,9 @@ public class MainActivity extends AppCompatActivity
 
     private void resetSeekBars()
     {
-        sb_j_red.setProgress(0);
-        sb_j_green.setProgress(0);
-        sb_j_blue.setProgress(0);
+        sb_j_red.setProgress(255);
+        sb_j_green.setProgress(255);
+        sb_j_blue.setProgress(255);
 
         updateColor();
     }
