@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SeekBar;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,10 +18,10 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity
 {
-    EditText et_j_red;
-    EditText et_j_green;
-    EditText et_j_blue;
-    EditText et_j_hexRep;
+    TextView et_j_red;
+    TextView et_j_green;
+    TextView et_j_blue;
+    TextView et_j_hexRep;
     SeekBar sb_j_red;
     SeekBar sb_j_green;
     SeekBar sb_j_blue;
@@ -114,7 +115,8 @@ public class MainActivity extends AppCompatActivity
 
         String hexColor = String.format("#%02X%02X%02X", red, green, blue);
         et_j_hexRep.setText(hexColor);
-        findViewById(R.id.main).setBackgroundColor(Color.rgb(red,green,blue));
+        View root = findViewById(R.id.main);
+        root.setBackgroundColor(Color.rgb(red,green,blue));
         updateTextColorContrast(red, green, blue);
 
     }
@@ -122,14 +124,22 @@ public class MainActivity extends AppCompatActivity
     private void updateTextColorContrast(int red, int green, int blue)
     {
         int brightness = (red + green + blue) / 3;
-        if(brightness < 128)
-        {
-            et_j_hexRep.setTextColor(Color.WHITE);
-        }
-        else
-        {
-            et_j_hexRep.setTextColor(Color.BLACK);
-        }
+        int textColor  = (brightness < 128) ? Color.WHITE : Color.BLACK;
+
+        //this only applies for the hexrep, needed for all words
+        //if(brightness < 128)
+        //{
+      //      et_j_hexRep.setTextColor(Color.WHITE);
+       // }
+      //  else
+      //  {
+        //    et_j_hexRep.setTextColor(Color.BLACK);
+      //  }
+
+        et_j_red.setTextColor(textColor);
+        et_j_green.setTextColor(textColor);
+        et_j_blue.setTextColor(textColor);
+        et_j_hexRep.setTextColor(textColor);
     }
 
     private void saveColor()
@@ -151,6 +161,8 @@ public class MainActivity extends AppCompatActivity
         sb_j_red.setProgress(0);
         sb_j_green.setProgress(0);
         sb_j_blue.setProgress(0);
+
+        updateColor();
     }
 
     private void registerButtonClickEvent()
